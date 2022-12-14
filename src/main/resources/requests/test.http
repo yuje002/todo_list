@@ -1,0 +1,40 @@
+PUT http://localhost:9988/api/member/join HTTP/1.1
+content-type : application/json
+
+{
+    "email" : "user01@service.com",
+    "pwd" : "1234",
+    "name" : "사용자1",
+    "birth" : "2022-12-14T00:00:00",
+    "reg_dt" : "2022-12-14T00:00:00"
+}
+######################################################################
+POST  http://localhost:9988/api/member/login HTTP/1.1
+content-type : application/json
+
+{
+    "email" : "user01@service.com",
+    "pwd" : "1234"
+}
+########################################################################
+PUT http://localhost:9988/api/todo/add HTTP/1.1
+content-type : application/json
+
+{
+    "content":"Todo 5",
+    "status":1,
+    "startDt":"2022-12-30T00:00:00",
+    "endDt" : "2022-12-30T00:00:00"
+}
+##########################################################################
+GET Http://localhost:9988/api/todo/list HTTP/1.1
+
+#############################################################################
+PATCH  Http://localhost:9988/api/todo/update/status?seq=1&value=2
+##############################################################################
+PATCH  Http://localhost:9988/api/todo/update/content?seq=1&value=어쩌고 저쩌고 
+#############################################################################
+DELETE Http://localhost:9988/api/todo/delete?seq=1 HTTP/1.1
+
+################################################################################
+GET  http://localhost:9988/api/todo/list/term?start=20221226&end=20221230
