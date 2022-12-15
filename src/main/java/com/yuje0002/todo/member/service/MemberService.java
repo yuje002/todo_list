@@ -1,6 +1,7 @@
 package com.yuje0002.todo.member.service;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,13 +9,30 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.yuje0002.todo.member.data.LoginVO;
+import com.yuje0002.todo.member.entity.MemberImageEntity;
 import com.yuje0002.todo.member.entity.MemberInfoEntity;
+import com.yuje0002.todo.member.repository.MemberImageRepository;
 import com.yuje0002.todo.member.repository.MemberRepositpry;
+
 import com.yuje0002.todo.utils.AESAlgorithm;
 
 @Service
 public class MemberService {
     @Autowired MemberRepositpry m_repo;
+    @Autowired MemberImageRepository mi_repo;
+    public Map<String, Object> addMemberImage(MemberImageEntity data, Long miSeq) {
+        Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
+        data.setMiSeq(miSeq);
+        mi_repo.save(data);
+        resultMap.put("status", true);
+        resultMap.put("message", "이미지가 저장되었습니다.");
+        resultMap.put("code", HttpStatus.OK);
+        return resultMap;
+    }
+    public String getFilenameByUri(String uri){
+        List<MemberImageEntity> data = mi_repo.findTopByUriOrderBySeqDesc(uri);
+        return data.get(0).getFileName();
+    }
     public Map<String, Object> addMember(MemberInfoEntity data){
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
         if(m_repo.countByEmail(data.getEmail()) ==1){
